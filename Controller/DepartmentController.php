@@ -30,6 +30,7 @@
                 $location = $post['department_location'];
                 $sql = "INSERT INTO departments(name,location) VALUES('$name','$location')";
                 $result = $database->queryExecute($sql);
+                $result->execute();
                 if($result){
                     header('location:../View/ViewDepartments.php');
                 }else{
@@ -42,6 +43,7 @@
             $database = new Connection();
             $sql = "SELECT * FROM departments";
             $result = $database->queryExecute($sql);
+            $result->execute();
             if($result){
                 return $result;
             }else{
@@ -53,8 +55,9 @@
             $database = new Connection();
             $sql = "SELECT * FROM departments WHERE id = $id";
             $result = $database->queryExecute($sql);
+            $result->execute();
             if($result){
-                $row = mysqli_fetch_array($result);
+                $row = $result->fetch(PDO::FETCH_BOTH);
                 return $row;
             }else{
                 echo 'data not fetched';
@@ -69,6 +72,7 @@
                 $location = $post['department_location'];
                 $sql = "UPDATE departments SET name = '$name', location = '$location' WHERE id = $id";
                 $result = $database->queryExecute($sql);
+                $result->execute();
                 if($result){
                     header('location:../View/ViewDepartments.php');
                 }else{
@@ -81,6 +85,7 @@
             $database = new Connection();
             $sql = "DELETE FROM departments WHERE id = $id";
             $result = $database->queryExecute($sql);
+            $result->execute();
             if($result){
                 header('location:../View/ViewDepartments.php');
             }else{
