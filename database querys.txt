@@ -1,0 +1,58 @@
+database :----------------------------------------------------------------
+
+department :
+department id
+department name
+department location
+
+employee :
+employee id
+employee first name
+employee last name
+employee age
+employee gender
+employee phone number
+employee roll type
+employee salary
+
+user :
+user id
+user name
+user email
+user password
+
+--------------------------------------------------------------------------
+1)
+
+create database maindb;
+
+create table departments(
+	id int not null AUTO_INCREMENT,
+	name varchar(20),
+	location varchar(20),
+	primary key (id)
+);
+
+create table employees(
+	id int not null AUTO_INCREMENT,
+	firstname varchar(20),
+	lastname varchar(20),
+	age int(3),
+	gender int(1),
+	phoneno int(20),
+	rolltype int(1),
+	salary int(10),
+	department_id int,
+	primary key (id),
+	foreign key (department_id) references departments(id)
+);
+
+create table users(
+	id int not null AUTO_INCREMENT,
+	username varchar(20) not null,
+	email varchar(30) not null unique,
+	password varchar(8) not null,
+	employee_id int,
+	primary key (id),
+	foreign key (employee_id) references employees(id)
+);
