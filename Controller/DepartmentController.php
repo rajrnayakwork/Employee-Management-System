@@ -1,6 +1,5 @@
-<?php require '../connection.php';
+<?php require '../Connection.php';
     class DepartmentController {
-        
 
         function validation($post){
             $error = [];
@@ -22,6 +21,7 @@
         }
 
         function addDepartment($post){
+            $database = new Connection();
             $error = $this->validation($post);
             if (!empty($error)) {
                 return $error;
@@ -29,8 +29,7 @@
                 $name = $post['department_name'];
                 $location = $post['department_location'];
                 $sql = "INSERT INTO departments(name,location) VALUES('$name','$location')";
-                global $connection;
-                $result = mysqli_query($connection,$sql);
+                $result = $database->queryExecute($sql);
                 if($result){
                     header('location:../View/ViewDepartments.php');
                 }else{
@@ -40,9 +39,9 @@
         }
 
         function viewDepartment(){
+            $database = new Connection();
             $sql = "SELECT * FROM departments";
-            global $connection;
-            $result = mysqli_query($connection,$sql);
+            $result = $database->queryExecute($sql);
             if($result){
                 return $result;
             }else{
@@ -51,9 +50,9 @@
         }
 
         function editDepartment($id){
+            $database = new Connection();
             $sql = "SELECT * FROM departments WHERE id = $id";
-            global $connection;
-            $result = mysqli_query($connection,$sql);
+            $result = $database->queryExecute($sql);
             if($result){
                 $row = mysqli_fetch_array($result);
                 return $row;
@@ -63,13 +62,13 @@
         }
 
         function updateDepartment($post){
+            $database = new Connection();
             if(!(empty($post['department_id'])) && !(empty($post['department_name'])) && !(empty($post['department_location']))){
                 $id = $post['department_id'];
                 $name = $post['department_name'];
                 $location = $post['department_location'];
                 $sql = "UPDATE departments SET name = '$name', location = '$location' WHERE id = $id";
-                global $connection;
-                $result = mysqli_query($connection,$sql);
+                $result = $database->queryExecute($sql);
                 if($result){
                     header('location:../View/ViewDepartments.php');
                 }else{
@@ -79,9 +78,9 @@
         }
 
         function deleteDepartment($id){
+            $database = new Connection();
             $sql = "DELETE FROM departments WHERE id = $id";
-            global $connection;
-            $result = mysqli_query($connection,$sql);
+            $result = $database->queryExecute($sql);
             if($result){
                 header('location:../View/ViewDepartments.php');
             }else{
