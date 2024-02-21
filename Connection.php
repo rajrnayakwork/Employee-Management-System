@@ -15,13 +15,16 @@
         }
 
         function connect(){
-            $connection = mysqli_connect($this->server_name,$this->user_name,$this->password,$this->database_name);
-            return $connection;
+            $dsn = "mysql:host=$this->server_name;dbname=$this->database_name"; //data source name
+            $pdo = new PDO($dsn,$this->user_name,$this->password);
+            // $connection = mysqli_connect($this->server_name,$this->user_name,$this->password,$this->database_name);
+            return $pdo;
         }
         
         function queryExecute($sql){
-            $connection = $this->connect();
-            $result = mysqli_query($connection,$sql);
+            $pdo = $this->connect();
+            $result = $pdo->prepare($sql);
+            // $result = mysqli_query($pdo,$sql);
             return $result;
         }
     
